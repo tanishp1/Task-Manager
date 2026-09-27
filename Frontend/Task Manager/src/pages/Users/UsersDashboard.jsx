@@ -13,7 +13,7 @@ import { API_PATHS } from "../../utils/ApiPath";
 import { addThousandsSeparator } from "../../utils/helper";
 import { useUserAuth } from "../../hooks/useUserAuth";
 
-const CHART_COLORS = ["#8D51FF", "#00BBDB", "#7BCE00"];
+const CHART_COLORS = ["#D59A32", "#329772", "#3D82D5"];
 
 const UsersDashboard = () => {
   useUserAuth();
@@ -61,24 +61,23 @@ const UsersDashboard = () => {
 
   return (
     <Dashboardlayout activeMenu="Dashboard">
-      <div className="my-5 pb-8">
-        <div className="card">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <h1 className="text-xl text-slate-800 md:text-2xl">Good morning, {user?.name || "there"}!</h1>
-              <p className="mt-1.5 text-xs text-slate-400 md:text-[13px]">{moment().format("dddd Do MMM YYYY")}</p>
-            </div>
-            <button type="button" className="card-btn" onClick={getDashboardData} disabled={loading}>
-              <LuRefreshCw className={loading ? "animate-spin" : ""} /> Refresh
-            </button>
+      <div className="my-5 space-y-6 pb-8">
+        <header className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-[11px] font-semibold text-emerald-700">YOUR OVERVIEW</p>
+            <h1 className="mt-2 text-2xl font-semibold text-slate-900 md:text-3xl">Good morning, {user?.name || "there"}</h1>
+            <p className="mt-1.5 text-sm text-slate-500">{moment().format("dddd Do MMM YYYY")}</p>
           </div>
+          <button type="button" className="card-btn" onClick={getDashboardData} disabled={loading}>
+            <LuRefreshCw className={loading ? "animate-spin" : ""} /> Refresh
+          </button>
+        </header>
 
-          <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
-            <InfoCard label="Total Tasks" value={addThousandsSeparator(taskDistribution.All || 0)} color="bg-blue-600" />
-            <InfoCard label="Pending Tasks" value={addThousandsSeparator(taskDistribution.Pending || 0)} color="bg-amber-500" />
-            <InfoCard label="In Progress Tasks" value={addThousandsSeparator(taskDistribution.InProgress || 0)} color="bg-cyan-500" />
-            <InfoCard label="Completed Tasks" value={addThousandsSeparator(taskDistribution.Completed || 0)} color="bg-emerald-500" />
-          </div>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          <InfoCard label="Total tasks" value={addThousandsSeparator(taskDistribution.All || 0)} color="bg-blue-600" />
+          <InfoCard label="Pending tasks" value={addThousandsSeparator(taskDistribution.Pending || 0)} color="bg-amber-500" />
+          <InfoCard label="In progress" value={addThousandsSeparator(taskDistribution.InProgress || 0)} color="bg-cyan-500" />
+          <InfoCard label="Completed" value={addThousandsSeparator(taskDistribution.Completed || 0)} color="bg-emerald-500" />
         </div>
 
         {loading ? (

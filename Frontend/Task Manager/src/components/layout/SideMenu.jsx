@@ -5,7 +5,7 @@ import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from '../../utils/data';
 import { getImageUrl } from '../../utils/helper';
 import { LuUser } from 'react-icons/lu';
 
-const SideMenu = ({activeMenu}) => {
+const SideMenu = ({activeMenu, onNavigate}) => {
   const { user, clearUser } = useContext(UserContext);
   const location = useLocation();
   const isUserRoute = location.pathname.startsWith('/users');
@@ -21,54 +21,61 @@ const SideMenu = ({activeMenu}) => {
     }
 
     navigate(route);
+    onNavigate?.();
   };
 
   const handleLogout = () => {
     localStorage.clear();
     clearUser();
     navigate('/login');
+    onNavigate?.();
   };
 
   return (
-    <div className='w-64 shrink-0 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 sticky top-15.25 z-20'>
-      <div className='flex flex-col items-center justify-center mb-7 pt-5'>
-        <div className='Relative'>
+    <aside className='dashboard-sidebar'>
+      <div className='dashboard-user-profile'>
+        <div className='dashboard-user-avatar'>
           {user?.profileImageUrl ? (
-            <img src={getImageUrl(user.profileImageUrl)} alt='Profile image' className='w-20 h-20 bg-slate-400 rounded-full object-cover'/>
+            <img src={getImageUrl(user.profileImageUrl)} alt='Profile' />
           ) : (
-            <div className='flex w-20 h-20 items-center justify-center rounded-full bg-slate-200'>
-              <LuUser className='text-4xl text-slate-400' />
+            <div className='dashboard-user-placeholder'>
+              <LuUser />
             </div>
           )}
         </div>
 
         {isAdmin && (
-          <div className='text-[10px] font-meduim text-white bg-primary px-3 py-0.5 rounded mt-1'>
+          <div className='dashboard-role-badge'>
             Admin
           </div>
         )} 
 
-        <h5 className='text-gray-950 font-medium leading-6 mt-3'>
+        <h5 className='dashboard-user-name'>
           {user?.name || ""}
         </h5>
 
-        <p className='text-[12px] text-gray-500'>{user?.email || ""}</p>
+        <p className='dashboard-user-email'>{user?.email || ""}</p>
       </div>
 
-      {sideMenuData.map((item) => {
-        return(
-          <button type="button" key={item.id}
-        className={`w-full flex items-center gap-4 text-[15px] 
-        ${activeMenu == item.label ? 
-        "text-primary bg-linear-to-r from-blue-50/40 to-blue-100/50 border-r-3" : ""}
-        py-3 px-6 mb-3 cursor-pointer`} onClick={() => handleClick(item.path)}>
-
-          <item.icon className='text-xl'/>
-          {item.label}
-        </button>
-        )
-      })}
-    </div>
+      <nav className='dashboard-nav' aria-label='Workspace navigation'>
+        <p className='dashboard-nav-label'>Workspace</p>
+        {sideMenuData.map((item) => {
+          const isActive = activeMenu === item.label;
+          return (
+            <button
+              type="button"
+              key={item.id}
+              className={`dashboard-nav-item ${isActive ? 'is-active' : ''}`}
+              aria-current={isActive ? 'page' : undefined}
+              onClick={() => handleClick(item.path)}
+            >
+              <item.icon />
+              <span>{item.label}</span>
+            </button>
+          )
+        })}
+      </nav>
+    </aside>
   )
 }
 

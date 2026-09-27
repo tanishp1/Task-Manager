@@ -7,13 +7,13 @@ const CustomeBarChart = ({data}) => {
     const getBarColor = (entry) => {
         switch (entry?.priority) {
             case 'low':
-                return '#00BC7D'
+                return '#329772'
             case 'medium':
-                return '#FE9900'
+                return '#D59A32'
             case 'high':
-                return '#FF1F57'
+                return '#D96A66'
             default:
-                return '#00BC7D'
+                return '#329772'
         }
     }
 
@@ -21,7 +21,7 @@ const CustomeBarChart = ({data}) => {
         if(active && payload && payload.length){
             return (
                 <div className='bg-white shadow-md rounded-lg p-2 border border-gray-300'>
-                    <p className='text-xs font-semibold text-purple-800 mb-1'>
+                    <p className='text-xs font-semibold text-slate-800 mb-1'>
                         {payload[0].payload.priority}
                     </p>
                     <p className='text-sm text-gray-600'>
@@ -37,7 +37,7 @@ const CustomeBarChart = ({data}) => {
     }
     if (!hasData) {
         return (
-            <div className="mt-6 flex h-[300px] items-center justify-center text-sm text-slate-400">
+            <div className="mt-6 flex h-75 items-center justify-center text-sm text-slate-400">
                 No task data yet.
             </div>
         );
@@ -57,9 +57,7 @@ const CustomeBarChart = ({data}) => {
                 dataKey='count' 
                 nameKey='priority' 
                 fill='#FF8042' 
-                radius={[10, 10, 0, 0]} 
-                activeDot={{ r: 8, fill: 'yellow'}} 
-                activeStyle={{ fill: 'green'}}
+                radius={[6, 6, 0, 0]} 
                 >
                     {data.map((entry, index) => (
                         <Cell key={index} fill={getBarColor(entry)}/>

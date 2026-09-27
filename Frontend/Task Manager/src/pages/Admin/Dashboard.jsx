@@ -14,7 +14,7 @@ import TaskListTable from '../../components/TaskListTable';
 import CustomePieChart from '../../components/Charts/CustomePieChart';
 import CustomeBarChart from '../../components/Charts/CustomeBarChart';
 
-const COLORS = ['#8D51FF', '#00BBDB', '#7BCE00'];
+const COLORS = ['#D59A32', '#329772', '#3D82D5'];
 
 const Dashboard = () => {
   useUserAuth();
@@ -66,17 +66,18 @@ const Dashboard = () => {
   
   return (
     <Dashboardlayout activeMenu="Dashboard">
-      <div className='card my-5'>
-        <div>
-          <div className='col-span-3'>
-          <h2 className='text-xl md:text-2xl'>Good Morning !{user?.name}</h2>
-          <p className='text-xs md:text-[13px] text-gray-400 mt-1.5'>
+      <div className='my-5 space-y-6 pb-8'>
+        <header>
+          <p className='text-[11px] font-semibold text-emerald-700'>TEAM OVERVIEW</p>
+          <h1 className='mt-2 text-2xl font-semibold text-slate-900 md:text-3xl'>
+            Good morning, {user?.name || 'there'}
+          </h1>
+          <p className='mt-1.5 text-sm text-slate-500'>
             {moment().format("dddd Do MMM YYYY")}
-            </p>
-          </div>
-        </div>
+          </p>
+        </header>
 
-        <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-5'>
+        <div className='grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4'>
           <InfoCard  label="Total Tasks" value={addThousandsSeparator(
             dashboardData?.charts?.taskDistribution?.All || 0
           )}
@@ -100,42 +101,39 @@ const Dashboard = () => {
           )}
           color="bg-emerald-500"
           />
+        </div>
 
+        <div className='grid grid-cols-1 gap-5 md:grid-cols-2'>
+          <section className='card'>
+            <div className='mb-2'>
+              <h2 className='font-semibold text-slate-800'>Task distribution</h2>
+              <p className='mt-1 text-xs text-slate-500'>Current status across your team</p>
+            </div>
+            <CustomePieChart data={pieChartData} color={COLORS}/>
+          </section>
+
+          <section className='card'>
+            <div className='mb-2'>
+              <h2 className='font-semibold text-slate-800'>Task priority</h2>
+              <p className='mt-1 text-xs text-slate-500'>Tasks grouped by urgency</p>
+            </div>
+            <CustomeBarChart data={barChartData} />
+          </section>
+
+          <section className='card md:col-span-2'>
+            <div className='flex items-center justify-between gap-3'>
+              <div>
+                <h2 className='font-semibold text-slate-800'>Recent tasks</h2>
+                <p className='mt-1 text-xs text-slate-500'>The latest activity from your team</p>
+              </div>
+              <button type='button' className='card-btn shrink-0' onClick={onSeeMore}>
+                See all <LuArrowRight className='text-base'/>
+              </button>
+            </div>
+            <TaskListTable tableData={dashboardData?.recentTasks || []}/>
+          </section>
         </div>
       </div>
-
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6'>
-
-            <div>
-              <div className='card'>
-                <div className='flex items-center justify-between'>
-                  <h5 className='font-medium'>Task Distribution</h5>
-                </div>
-
-                <CustomePieChart data={pieChartData} color={COLORS}/>
-              </div>
-            </div>
-
-            <div>
-              <div className='card'>
-                <div className='flex items-center justify-between'>
-                  <h5 className='font-medium'>Task Priority</h5>
-                </div>
-
-                <CustomeBarChart data={barChartData} />
-              </div>
-            </div>
-            <div className='md:cols-span-2'>
-              <div className='card'>
-                <div className='flex items-center justify-between'>
-                  <h5 className='text-lg'>Recent Task</h5>
-                  <button className='card-btn' onClick={onSeeMore}>See All
-                    <LuArrowRight className='text-base'/></button>
-                </div>
-                <TaskListTable tableData={dashboardData?.recentTasks || []}/>
-              </div>
-            </div>
-          </div>
     </Dashboardlayout>
   )
 }

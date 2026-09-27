@@ -6,15 +6,15 @@ import SideMenu from './SideMenu'
 const Dashboardlayout = ({children , activeMenu}) => {
     const {user} = useContext(UserContext)
   return (
-    <div className=''>
+    <div className='dashboard-shell'>
       <Navbar activeMenu={activeMenu} />
 
       {user && (
-        <div className='flex'>
-            <div className='hidden lg:block'>
-                <SideMenu activeMenu={activeMenu}/>
-        </div>
-        <div className='grow mx-5'>{children}</div>
+        <div className='dashboard-frame'>
+          <aside className='dashboard-desktop-sidebar'>
+            <SideMenu activeMenu={activeMenu}/>
+          </aside>
+          <main className='dashboard-content'>{children}</main>
         </div>
       )}
     </div>

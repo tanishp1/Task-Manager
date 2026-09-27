@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import Authlayout from "../../components/layout/Authlayout";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/input";
 import { validateEmail } from "../../utils/helper";
 import Axiosinstance from "../../utils/Axiosinstance";
 import { API_PATHS } from "../../utils/ApiPath";
-import ContextProvider, { UserContext } from "../../context/useContext";
+import { UserContext } from "../../context/useContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ const Login = () => {
       return;
     }
 
-    setError(" ");
+    setError(null);
 
     // Login api calling
     try {
@@ -60,14 +60,13 @@ const Login = () => {
     }
   };
   return (
-    <Authlayout>
-      <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Welcome Back</h3>
-        <p className="text-xs text-slate-700 mt-1.25 mb-6">
-          Please enter your detail to login in
-        </p>
+    <Authlayout variant="login">
+      <section className="auth-login-card" aria-labelledby="login-heading">
+        <p className="auth-login-eyebrow">YOUR WORKSPACE</p>
+        <h3 id="login-heading" className="auth-login-title">Welcome back</h3>
+        <p className="auth-login-description">Sign in to pick up where you left off.</p>
 
-        <form onSubmit={handleLogin}>
+        <form className="auth-login-form" onSubmit={handleLogin}>
           <Input
             type="text"
             value={email}
@@ -84,19 +83,19 @@ const Login = () => {
             placeholder="Enter your password"
           />
 
-          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+          {error && <p className="auth-login-error" role="alert">{error}</p>}
 
           <button type="submit" className="btn-primary">
-              Login
+            Login
           </button>
-          <p className="text-[13px] text-slate-800 mt-3">
+          <p className="auth-login-signup">
             Don't have an account? {" "}
-            <Link className="font-medium text-primary underline"to="/signup">
-                Signup
+            <Link className="font-medium text-primary underline" to="/signup">
+              Sign up
             </Link>
           </p>
         </form>
-      </div>
+      </section>
     </Authlayout>
   );
 };

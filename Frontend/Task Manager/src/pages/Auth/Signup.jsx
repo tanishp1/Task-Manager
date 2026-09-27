@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import Authlayout from '../../components/layout/Authlayout'
 import ProfilePhotoSelector from '../../components/inputs/ProfilePhotoSelector';
 import Input from '../../components/Inputs/input';
 import { Link, useNavigate } from 'react-router-dom';
 import Axiosinstance from '../../utils/Axiosinstance';
 import { API_PATHS } from '../../utils/ApiPath';
-import ContextProvider, { UserContext } from '../../context/useContext';
+import { UserContext } from '../../context/useContext';
 import uploadImage from '../../utils/uploadImage';
 
 const Signup = () => {
@@ -41,7 +41,7 @@ const Signup = () => {
           return;
         }
     
-        setError(" ");
+        setError(null);
 
         // Signup api calling
         try {
@@ -80,17 +80,22 @@ const Signup = () => {
   };
 
   return (
-    <Authlayout>
-      <div className='lg:w-full h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center' >
-        <h3 className='text-xl font-semibold text-black'>Create account</h3>
-        <p className='text-xs text-slate-700 mt-1.25 mb-6 '>
-          Join us today by entering your detail below
-        </p>
+    <Authlayout variant="signup">
+      <section className="auth-signup-card" aria-labelledby="signup-heading">
+        <p className="auth-signup-eyebrow">GET STARTED</p>
+        <h3 id="signup-heading" className="auth-signup-title">Create your account</h3>
+        <p className="auth-signup-description">Set up your details and get your workspace ready.</p>
 
-        <form onSubmit={handleSignup}>
-          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}/>
+        <form className="auth-signup-form" onSubmit={handleSignup}>
+          <div className="auth-signup-profile">
+            <div>
+              <p className="auth-signup-profile-title">Profile photo</p>
+              <p className="auth-signup-profile-hint">Optional. You can add one later.</p>
+            </div>
+            <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}/>
+          </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+          <div className="auth-signup-grid">
             <Input 
             value={fullName} 
             onChange={({target}) => setFullName(target.value)} 
@@ -124,19 +129,19 @@ const Signup = () => {
           />
       </div>
 
-          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+          {error && <p className="auth-login-error" role="alert">{error}</p>}
 
           <button type="submit" className="btn-primary">
-              SignUp
+            Create account
           </button>
-          <p className="text-[13px] text-slate-800 mt-3">
-            Do you have account already {" "}
-            <Link className="font-medium text-primary underline"to="/login">
-                Login
+          <p className="auth-signup-login">
+            Already have an account?{" "}
+            <Link className="font-medium text-primary underline" to="/login">
+              Sign in
             </Link>
           </p>
         </form>
-      </div>
+      </section>
     </Authlayout>
   )
 }

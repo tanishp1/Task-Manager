@@ -1,32 +1,49 @@
 import { useState } from 'react'
 import { HiOutlineX, HiOutlineMenu } from 'react-icons/hi';
+import { FiCheck } from 'react-icons/fi';
 import SideMenu from './SideMenu'
 
 const Navbar = ({activeMenu}) => {
     const [openSideMenu, setOpenSideMenu] = useState(false)
   return (
-    <div className='flex gap-5 bg-white border border-b border-gary-200/50 backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30'>
+        <header className='dashboard-topbar'>
+            <div className='dashboard-topbar-inner'>
         <button
         type='button'
-        className='block lg:hidden text-black'
+                className='dashboard-menu-toggle'
+                aria-label={openSideMenu ? 'Close navigation' : 'Open navigation'}
+                aria-expanded={openSideMenu}
         onClick={()=> {
             setOpenSideMenu(!openSideMenu)
         }}
         >
             {openSideMenu ? (
-                <HiOutlineX className= 'text-2xl'/>
+                                <HiOutlineX />
             ) : (
-                <HiOutlineMenu className='text-2xl'/>
+                                <HiOutlineMenu />
             )}
         </button>
-        <h2 className='text-lg font-medium text-black'>Task Management</h2>
+                <div className='dashboard-wordmark'>
+                    <span className='dashboard-brand-mark' aria-hidden='true'><FiCheck /></span>
+                    <span>Task Manager</span>
+                </div>
+                <span className='dashboard-topbar-section'>{activeMenu}</span>
+            </div>
 
         {openSideMenu && (
-            <div className='fixed left-0 top-15.25 z-40 bg-white shadow-lg'>
-                <SideMenu activeMenu={activeMenu}/>
+                        <div className='dashboard-mobile-nav'>
+                                <button
+                                    type='button'
+                                    className='dashboard-mobile-backdrop'
+                                    aria-label='Close navigation'
+                                    onClick={() => setOpenSideMenu(false)}
+                                />
+                                <div className='dashboard-mobile-panel'>
+                                    <SideMenu activeMenu={activeMenu} onNavigate={() => setOpenSideMenu(false)}/>
+                                </div>
             </div>
         )}
-    </div>
+        </header>
   )
 }
 

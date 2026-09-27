@@ -1,43 +1,42 @@
-import React from "react";
 import moment from "moment";
 
 const TaskListTable = ({ tableData }) => {
   const getStatusBadgeColor = (status) => {
     switch (status) {
       case "Completed":
-        return "bg-green-100 text-green-500 border border-green-200";
+        return "bg-emerald-50 text-emerald-700 border border-emerald-200";
       case "Pending":
-        return "bg-purple-100 text-purple-500 border border-purple-200";
+        return "bg-amber-50 text-amber-700 border border-amber-200";
       case "In Progress":
-        return "bg-cyan-100 text-cyan-500 border border-cyan-200";
+        return "bg-blue-50 text-blue-700 border border-blue-200";
     }
   };
 
   const getPriorityBadgeColor = (priority) => {
     switch (priority) {
       case "high":
-        return "bg-red-100 text-red-500 border border-red-200";
+        return "bg-rose-50 text-rose-700 border border-rose-200";
       case "medium":
-        return "bg-orange-100 text-orange-500 border border-orange-200";
+        return "bg-amber-50 text-amber-700 border border-amber-200";
       case "low":
-        return "bg-gray-100 text-gray-500 border border-gray-200 ";
+        return "bg-slate-50 text-slate-600 border border-slate-200 ";
     }
   };
   return (
     <div className="overflow-x-auto p-0 rounded-lg mt-3">
       <table className="min-w-full">
         <thead>
-          <tr className="text-left">
-            <th className="py-3 px-4 text-gray-800 font-medium text-[13px]">
+          <tr className="bg-slate-50 text-left">
+            <th className="py-3 px-4 text-slate-500 font-medium text-xs">
               Name
             </th>
-            <th className="py-3 px-4 text-gray-800 font-medium text-[13px]">
+            <th className="py-3 px-4 text-slate-500 font-medium text-xs">
               Status
             </th>
-            <th className="py-3 px-4 text-gray-800 font-medium text-[13px]">
+            <th className="py-3 px-4 text-slate-500 font-medium text-xs">
               Priority
             </th>
-            <th className="py-3 px-4 text-gray-800 font-medium text-[13px] hidden md:table-cell">
+            <th className="py-3 px-4 text-slate-500 font-medium text-xs hidden md:table-cell">
               Create On
             </th>
           </tr>
@@ -45,20 +44,20 @@ const TaskListTable = ({ tableData }) => {
         <tbody>
           {tableData.map((task) => {
             return (
-              <tr key={task._id} className="border border-gray-200">
-                <td className="my-3 mx-4 text-gray-700 text-[13px] line-clamp-1 overflow-hidden">
+              <tr key={task._id} className="border-b border-slate-100 transition-colors hover:bg-slate-50/70 last:border-b-0">
+                <td className="py-4 px-4 text-slate-700 text-[13px] line-clamp-1 overflow-hidden">
                   {task.title}
                 </td>
                 <td className="py-4 px-4">
                   <span
-                    className={`px-2 py-1 text-xs rounded inline-block ${getStatusBadgeColor(task.status)}`}
+                    className={`px-2 py-1 text-xs rounded-md inline-block ${getStatusBadgeColor(task.status)}`}
                   >
                     {task.status}
                   </span>
                 </td>
                 <td className="py-4 px-4">
                   <span
-                    className={`px-2 py-1 text-xs rounded inline-block ${getPriorityBadgeColor(task.priority)}`}
+                    className={`px-2 py-1 text-xs rounded-md inline-block ${getPriorityBadgeColor(task.priority)}`}
                   >
                     {task.priority}
                   </span>
