@@ -12,10 +12,17 @@ const Authlayout = ({children, variant}) => {
           {isBranded && <span className="auth-login-brand-mark" aria-hidden="true"><FiCheck /></span>}
           Task Manager
         </h2>
-        {isLogin ? <main className="auth-login-main">{children}</main> : isSignup ? <main className="auth-signup-main">{children}</main> : children}
+        {isLogin
+          ? <main className="auth-login-main">{children}</main>
+          : isSignup
+          ? <main className="auth-signup-main">{children}</main>
+          : children
+        }
       </div>
 
-      {!isBranded && <div className="hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-cover bg-no-repeat bg-center overflow-hidden" />}
+      {!isBranded && (
+        <div className="hidden md:flex w-[40vw] h-screen items-center justify-center bg-blue-50 bg-cover bg-no-repeat bg-center overflow-hidden" />
+      )}
     </div>
   )
 }

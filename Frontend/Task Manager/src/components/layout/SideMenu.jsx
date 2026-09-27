@@ -61,11 +61,18 @@ const SideMenu = ({activeMenu, onNavigate}) => {
         <p className='dashboard-nav-label'>Workspace</p>
         {sideMenuData.map((item) => {
           const isActive = activeMenu === item.label;
+          const isLogout = item.path === 'logout';
           return (
             <button
               type="button"
               key={item.id}
               className={`dashboard-nav-item ${isActive ? 'is-active' : ''}`}
+              style={isLogout ? {
+                marginTop: 12,
+                borderTop: '1px solid #e2e8f0',
+                paddingTop: 14,
+                color: '#ef4444'
+              } : {}}
               aria-current={isActive ? 'page' : undefined}
               onClick={() => handleClick(item.path)}
             >
